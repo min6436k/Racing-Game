@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditorInternal;
 
 [System.Serializable]
 public class AxleInfo
@@ -78,7 +79,7 @@ public class wheel : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.K))
         {
-            rb.AddForce(transform.forward*20000, ForceMode.Impulse);
+            rb.velocity = rb.velocity * 1.5f;
         }
     }
 }
