@@ -21,6 +21,12 @@ public class wheel : MonoBehaviour
 
     public Transform center;
 
+    public bool IsPlayer;
+
+    public Transform WayPoints;
+    private Transform TargetPoint;
+    private int WayIndex = 0;
+
     private Rigidbody rb;
 
 
@@ -28,6 +34,8 @@ public class wheel : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.centerOfMass = center.localPosition;
+
+        if (!IsPlayer) TargetPoint = WayPoints.GetChild(WayIndex);
     }
     // finds the corresponding visual wheel
     // correctly applies the transform
@@ -50,9 +58,32 @@ public class wheel : MonoBehaviour
 
     public void FixedUpdate()
     {
-        float motor = maxMotorTorque * Input.GetAxis("Vertical");
-        float steering = maxSteeringAngle * Input.GetAxis("Horizontal");
-        float Break = Input.GetKey(KeyCode.Space) ? BreakForce : 0;
+        float motor = 1000;
+        float steering = 0;
+        float Break = 0;
+
+        if (IsPlayer)
+        {
+            motor = maxMotorTorque * Input.GetAxis("Vertical");
+            steering = maxSteeringAngle * Input.GetAxis("Horizontal");
+            Break = Input.GetKey(KeyCode.Space) ? BreakForce : 0;
+        }
+        else
+        {
+            if(Vector3.Distance(TargetPoint.position,transform.position) <= 10 && WayPoints.childCount > WayIndex+1)
+            {
+                WayIndex++;
+                TargetPoint = WayPoints.GetChild(WayIndex);
+
+                if (WayPoints.childCount - 1 == WayIndex) WayIndex = 0;
+            }
+
+            Vector3 waypointRelativeDistance = transform.InverseTransformPoint(TargetPoint.position);
+            waypointRelativeDistance /= waypointRelativeDistance.magnitude;
+            steering = (waypointRelativeDistance.x / waypointRelativeDistance.magnitude) * 25;
+
+        } //더러우니 수정 필요, 그대로 복사하지 말것. 절대.
+
 
         foreach (AxleInfo axleInfo in axleInfos)
         {
@@ -79,7 +110,7 @@ public class wheel : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.K))
         {
-            rb.velocity = rb.velocity * 1.5f;
+            rb.AddForce(transform.forward * 20000, ForceMode.Impulse);
         }
     }
 }
