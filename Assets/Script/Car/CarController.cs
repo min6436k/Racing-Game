@@ -2,8 +2,9 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditorInternal;
+using System;
 
-[System.Serializable]
+[Serializable]
 public class AxleInfo
 {
     public WheelCollider leftWheel;
@@ -12,33 +13,37 @@ public class AxleInfo
     public bool steering;
 }
 
-public class wheel : MonoBehaviour
+public class CarController : MonoBehaviour
 {
     public List<AxleInfo> axleInfos;
     public float maxMotorTorque;
     public float maxSteeringAngle;
     public float BreakForce;
 
+    public bool Drift = false;
+
     public Transform center;
 
     public bool IsPlayer;
 
     public Transform WayPoints;
+    public bool bPassLastPoint = false;
     private Transform TargetPoint;
     private int WayIndex = 0;
 
-    private Rigidbody rb;
+    private Rigidbody rigid;
 
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        rb.centerOfMass = center.localPosition;
+        rigid = GetComponent<Rigidbody>();
+        rigid.centerOfMass = center.localPosition;
 
-        if (!IsPlayer) TargetPoint = WayPoints.GetChild(WayIndex);
+        TargetPoint = WayPoints.GetChild(WayIndex);
+
+        if (gameObject.CompareTag("Player")) IsPlayer = true;
+        else IsPlayer = false;
     }
-    // finds the corresponding visual wheel
-    // correctly applies the transform
     public void ApplyLocalPositionToVisuals(WheelCollider collider)
     {
         if (collider.transform.childCount == 0)
@@ -70,20 +75,22 @@ public class wheel : MonoBehaviour
         }
         else
         {
-            if(Vector3.Distance(TargetPoint.position,transform.position) <= 10 && WayPoints.childCount > WayIndex+1)
+            Vector3 WaypointDistance = transform.InverseTransformPoint(TargetPoint.position);
+            WaypointDistance = WaypointDistance.normalized;
+            steering = WaypointDistance.x * 25;
+        }
+
+        if (Vector3.Distance(TargetPoint.position, transform.position) <= 10 && WayPoints.childCount > WayIndex + 1)
+        {
+            WayIndex++;
+            TargetPoint = WayPoints.GetChild(WayIndex);
+
+            if (WayIndex == WayPoints.childCount - 1)
             {
-                WayIndex++;
-                TargetPoint = WayPoints.GetChild(WayIndex);
-
-                if (WayPoints.childCount - 1 == WayIndex) WayIndex = 0;
+                WayIndex = 0;
+                bPassLastPoint = true;
             }
-
-            Vector3 waypointRelativeDistance = transform.InverseTransformPoint(TargetPoint.position);
-            waypointRelativeDistance /= waypointRelativeDistance.magnitude;
-            steering = (waypointRelativeDistance.x / waypointRelativeDistance.magnitude) * 25;
-
-        } //더러우니 수정 필요, 그대로 복사하지 말것. 절대.
-
+        }
 
         foreach (AxleInfo axleInfo in axleInfos)
         {
@@ -101,6 +108,15 @@ public class wheel : MonoBehaviour
             axleInfo.leftWheel.brakeTorque = Break;
             axleInfo.rightWheel.brakeTorque = Break;
 
+            WheelFrictionCurve temp = axleInfo.leftWheel.sidewaysFriction;
+
+            if (Drift) temp.stiffness = 1;
+            else temp.stiffness = 5;
+
+            axleInfo.leftWheel.sidewaysFriction = temp;
+            axleInfo.rightWheel.sidewaysFriction = temp;
+
+
             ApplyLocalPositionToVisuals(axleInfo.leftWheel);
             ApplyLocalPositionToVisuals(axleInfo.rightWheel);
         }
@@ -108,9 +124,29 @@ public class wheel : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.K))
+        if (IsPlayer)
         {
-            rb.AddForce(transform.forward * 20000, ForceMode.Impulse);
+            if (Input.GetKeyDown(KeyCode.K))
+            {
+                rigid.AddForce(transform.forward * 20000, ForceMode.Impulse);
+            } //디버깅
+
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                transform.position = WayPoints.GetChild(WayIndex == 0 ? WayPoints.childCount-2 : WayIndex - 1).position;
+                transform.position += new Vector3(0, 1.5f, 0);
+                rigid.velocity = Vector3.zero;
+
+                transform.LookAt(TargetPoint.position);
+            }
+
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                Drift = true;
+            }
+            else Drift = false;
+
         }
+
     }
 }

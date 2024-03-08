@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WayGizmo : MonoBehaviour
+public class WayPointGizmo : MonoBehaviour
 {
     public Transform WayPoints;
     private void OnDrawGizmos()
@@ -10,6 +10,7 @@ public class WayGizmo : MonoBehaviour
         foreach (Transform t in WayPoints)
         {
             Gizmos.DrawWireSphere(t.position, 1);
+            Gizmos.DrawWireSphere(t.position, 10);
         }
 
         Gizmos.DrawLine(WayPoints.GetChild(0).position, WayPoints.GetChild(WayPoints.childCount-1).position);

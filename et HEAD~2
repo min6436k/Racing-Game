@@ -1,0 +1,41 @@
+[33mcommit 6545d99fee41381f3da7e693d0233eec16860611[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: min6436k <min6436k@gmail.com>
+Date:   Fri Mar 8 14:28:40 2024 +0900
+
+    에셋 업로드 제외
+
+[33mcommit 0a9d2d93dfca235ac6d7a594573889ccd37158f0[m
+Author: min6436k <min6436k@gmail.com>
+Date:   Fri Mar 8 14:19:45 2024 +0900
+
+    push가 안되고 있었다고
+
+[33mcommit 04c036816009bd5a84ecd8ee9c33140f58b2d943[m
+Author: min6436k <min6436k@gmail.com>
+Date:   Thu Mar 7 20:30:40 2024 +0900
+
+    상점 연동 구현
+
+[33mcommit a5e2bfc9c74a4ef854dc6a0c801412127d9e2293[m
+Author: min6436k <min6436k@gmail.com>
+Date:   Wed Mar 6 20:27:53 2024 +0900
+
+    시스템 틀 제작
+
+[33mcommit 1935a56ddaecb5fae70b64842533dc52ca115b59[m[33m ([m[1;31morigin/main[m[33m)[m
+Author: min6436k <min6436k@gmail.com>
+Date:   Tue Mar 5 20:30:59 2024 +0900
+
+    플레이어 컨트롤, AI 움직임 기반 완성
+
+[33mcommit 753bf31eb45f8554d9a981761be5a472517a0916[m
+Author: min6436k <min6436k@gmail.com>
+Date:   Tue Mar 5 18:44:57 2024 +0900
+
+    자동차 움직임 조절
+
+[33mcommit 4594271805beb0e0d3a9e43dd430b5c959f7838d[m
+Author: min6436k <min6436k@gmail.com>
+Date:   Tue Mar 5 17:38:26 2024 +0900
+
+    first commit
