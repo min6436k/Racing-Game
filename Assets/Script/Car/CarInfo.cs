@@ -44,6 +44,13 @@ public class CarInfo : MonoBehaviour
             GetComponent<CarController>().bPassLastPoint = false;
             FinishLine();
             Lab++;
+
+            if (Lab == 3)
+            {
+                if (GetComponent<CarController>().IsPlayer) GameManager.instance.GameClear();
+                else GameManager.instance.GameOver();
+            }
+
         }
     }
 }

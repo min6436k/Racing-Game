@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainUIManager : MonoBehaviour
 {
@@ -28,5 +30,10 @@ public class MainUIManager : MonoBehaviour
             OnUIList.Pop().SetActive(false);
             OnUIList.Peek().SetActive(true);
         }
+    }
+
+    public void GoToStage(int SceneNum)
+    {
+        SceneManager.LoadSceneAsync("Stage"+SceneNum);
     }
 }

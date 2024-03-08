@@ -43,6 +43,8 @@ public class CarController : MonoBehaviour
 
         if (gameObject.CompareTag("Player")) IsPlayer = true;
         else IsPlayer = false;
+
+        if (Reverse) WayIndex = WayPoints.childCount - 1;
     }
     public void ApplyLocalPositionToVisuals(WheelCollider collider)
     {
@@ -80,15 +82,18 @@ public class CarController : MonoBehaviour
             steering = WaypointDistance.x * 25;
         }
 
-        if (Vector3.Distance(TargetPoint.position, transform.position) <= 10 && WayPoints.childCount > WayIndex + 1)
+        if (Vector3.Distance(TargetPoint.position, transform.position) <= 10)
         {
-            WayIndex++;
-            TargetPoint = WayPoints.GetChild(WayIndex);
-
-            if (WayIndex == WayPoints.childCount - 1)
+            if (WayPoints.childCount > WayIndex + 1)
             {
-                WayIndex = 0;
-                bPassLastPoint = true;
+                WayIndex++;
+
+                if (WayIndex == WayPoints.childCount - 1)
+                {
+                    WayIndex = 0;
+                    bPassLastPoint = true;
+                }
+                TargetPoint = WayPoints.GetChild(WayIndex);
             }
         }
 

@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
 
     public GameObject Managers;
 
+    public GameObject ShopUI;
+
     [HideInInspector]
     public TimeGauge TimeGauge;
 
@@ -35,6 +37,26 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKey(KeyCode.Escape) && ShopUI.activeSelf){
+            ShopUI.SetActive(false);
+            StopTime();
+        }
+    }
+
+    public void GameClear()
+    {
+
+    }
+
+    public void GameOver()
+    {
+
+    }
+
+    public void GoShop()
+    {
+        ShopUI.SetActive(true);
+        StopTime();
     }
 
     void StopTime()

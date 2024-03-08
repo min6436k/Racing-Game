@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class SpeedItem : BaseItem
 {
-    public float SpeedMultiply;
+    public float AddSpeed;
     public override void GetItem()
     {
         base.GetItem();
 
         Rigidbody CarRigid = GameManager.instance.Player.GetComponent<Rigidbody>();
-        CarRigid.velocity = CarRigid.velocity * SpeedMultiply;
+
+        CarRigid.AddForce(transform.forward * AddSpeed, ForceMode.Impulse);
+
+
+        Destroy(gameObject);
     }
 }

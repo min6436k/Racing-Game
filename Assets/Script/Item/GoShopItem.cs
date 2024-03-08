@@ -8,5 +8,7 @@ public class GoShopItem : BaseItem
     {
         base.GetItem();
 
+        GameManager.instance.GoShop();
+        Destroy(gameObject);
     }
 }

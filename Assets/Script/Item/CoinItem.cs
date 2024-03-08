@@ -10,5 +10,7 @@ public class CoinItem : BaseItem
         base.GetItem();
 
         GameInstance.instance.Coin += Coin;
+        Destroy(gameObject);
+
     }
 }
