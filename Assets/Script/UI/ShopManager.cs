@@ -2,24 +2,28 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 [Serializable]
-public struct ShopItem
+public class ShopItem
 {
+    public int ShopItemRank;
+
+    [Header("아래는 GameInstance에서 건드리는거 아님")]
     public EnumTypes.Shop type;
 
-    [Header("인스펙터 창에서는 필요 없음")]
     public Transform Ranks;
 
-    public int ShopItemRank;
 }
 public class ShopManager : MonoBehaviour
 {
     public List<ShopItem> ShopItems = new List<ShopItem> ();
+
     private void Start()
     {
         UpdateShopUI();
+        GameInstance.instance.UpdateShopEvent.AddListener(()=>UpdateShopUI());
     }
 
     public void UpdateShopUI()

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GameInstance : MonoBehaviour
 {
@@ -11,6 +12,9 @@ public class GameInstance : MonoBehaviour
     public List<BaseStage> Stages;
     public List<ShopItem> ShopItems;
     public int Coin = 0;
+
+    public UnityEvent UpdateShopEvent;
+
 
     void Start()
     {
@@ -28,7 +32,13 @@ public class GameInstance : MonoBehaviour
 
     public void BuyShopItem(EnumTypes.Shop ShopItem)
     {
+        ShopItem tempClass = ShopItems.Find(x => x.type == ShopItem);
 
+        if (tempClass.ShopItemRank < 3)
+        {
+            tempClass.ShopItemRank++;
+            UpdateShopEvent.Invoke();
+        }
     }
     void Update()
     {
