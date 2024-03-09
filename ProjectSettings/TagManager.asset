@@ -5,14 +5,15 @@ TagManager:
   serializedVersion: 2
   tags:
   - FinishLine
+  - Enemy
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Wheel
   - Water
   - UI
-  - 
+  - Car
   - 
   - 
   - 

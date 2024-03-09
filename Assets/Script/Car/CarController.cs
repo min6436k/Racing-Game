@@ -20,16 +20,14 @@ public class CarController : MonoBehaviour
     public float maxSteeringAngle;
     public float BreakForce;
 
-    public bool Drift = false;
-
     public Transform center;
 
     public bool IsPlayer;
 
     public Transform WayPoints;
     public bool bPassLastPoint = false;
-    private Transform TargetPoint;
-    private int WayIndex = 0;
+    public int WayIndex = 0;
+    public Vector3 TargetPoint;
 
     private Rigidbody rigid;
 
@@ -39,12 +37,21 @@ public class CarController : MonoBehaviour
         rigid = GetComponent<Rigidbody>();
         rigid.centerOfMass = center.localPosition;
 
-        TargetPoint = WayPoints.GetChild(WayIndex);
+        TargetPoint = WayPoints.GetChild(WayIndex).position;
 
         if (gameObject.CompareTag("Player")) IsPlayer = true;
         else IsPlayer = false;
 
-        if (Reverse) WayIndex = WayPoints.childCount - 1;
+        switch(GameInstance.instance.ShopItems.Find(x => x.type == EnumTypes.Shop.Engine).ShopItemRank)
+        {
+            case 1:
+                maxMotorTorque *= 1.4f;
+                break;
+            case 2:
+                maxMotorTorque *= 2f;
+                break;
+
+        }
     }
     public void ApplyLocalPositionToVisuals(WheelCollider collider)
     {
@@ -65,7 +72,14 @@ public class CarController : MonoBehaviour
 
     public void FixedUpdate()
     {
-        float motor = 1000;
+        WheelMove();
+
+
+    }
+
+    private void WheelMove()
+    {
+        float motor = maxMotorTorque;
         float steering = 0;
         float Break = 0;
 
@@ -74,15 +88,27 @@ public class CarController : MonoBehaviour
             motor = maxMotorTorque * Input.GetAxis("Vertical");
             steering = maxSteeringAngle * Input.GetAxis("Horizontal");
             Break = Input.GetKey(KeyCode.Space) ? BreakForce : 0;
+
+            if (GameInstance.instance.CurrentStage > GameInstance.instance.ShopItems.Find(x => x.type == EnumTypes.Shop.Tier).ShopItemRank)
+            {
+                RaycastHit hit;
+                if (Physics.Raycast(transform.position, -transform.up, out hit))
+                {
+                    if (hit.collider.name == "SlowTerrain")
+                    {
+                        motor /= 3;
+                    }
+                }
+            }
         }
         else
         {
-            Vector3 WaypointDistance = transform.InverseTransformPoint(TargetPoint.position);
+            Vector3 WaypointDistance = transform.InverseTransformPoint(TargetPoint);
             WaypointDistance = WaypointDistance.normalized;
-            steering = WaypointDistance.x * 25;
+            steering = WaypointDistance.x * maxSteeringAngle;
         }
 
-        if (Vector3.Distance(TargetPoint.position, transform.position) <= 10)
+        if (Vector3.Distance(TargetPoint, transform.position) <= (IsPlayer ? 35 : 15))
         {
             if (WayPoints.childCount > WayIndex + 1)
             {
@@ -93,7 +119,10 @@ public class CarController : MonoBehaviour
                     WayIndex = 0;
                     bPassLastPoint = true;
                 }
-                TargetPoint = WayPoints.GetChild(WayIndex);
+
+                GameManager.instance.SpawnNPC(TargetPoint);
+
+                TargetPoint = WayPoints.GetChild(WayIndex).position;
             }
         }
 
@@ -112,15 +141,6 @@ public class CarController : MonoBehaviour
 
             axleInfo.leftWheel.brakeTorque = Break;
             axleInfo.rightWheel.brakeTorque = Break;
-
-            WheelFrictionCurve temp = axleInfo.leftWheel.sidewaysFriction;
-
-            if (Drift) temp.stiffness = 1;
-            else temp.stiffness = 5;
-
-            axleInfo.leftWheel.sidewaysFriction = temp;
-            axleInfo.rightWheel.sidewaysFriction = temp;
-
 
             ApplyLocalPositionToVisuals(axleInfo.leftWheel);
             ApplyLocalPositionToVisuals(axleInfo.rightWheel);
@@ -142,16 +162,9 @@ public class CarController : MonoBehaviour
                 transform.position += new Vector3(0, 1.5f, 0);
                 rigid.velocity = Vector3.zero;
 
-                transform.LookAt(TargetPoint.position);
+                transform.LookAt(TargetPoint);
             }
-
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
-                Drift = true;
-            }
-            else Drift = false;
 
         }
-
     }
 }

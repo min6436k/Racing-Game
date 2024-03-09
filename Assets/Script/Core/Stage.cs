@@ -6,5 +6,5 @@ public class BaseStage
     public int StageNum = 0;
 
     public bool Cleared = false;
-    public float[] ClearTime;
+    public float BestTime;
 }

@@ -7,7 +7,6 @@ public class CMTarget : MonoBehaviour
     public Transform PlayerTF;
     void Start()
     {
-        //PlayerTF = GameManager.instance.Player.transform;
     }
 
     void Update()

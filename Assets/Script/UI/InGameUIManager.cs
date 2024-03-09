@@ -21,9 +21,9 @@ public class InGameUIManager : MonoBehaviour
     {
         carinfo = GameManager.instance.Player.GetComponent<CarInfo>();
         //임시 코드
-        testtext = "Speed(Km/h) : " + carinfo.KmperHourSpeed.ToString();
+        testtext = "Speed(Km/h) : " + carinfo.KmperHourSpeed.ToString("0.00");
         testtext += "\nLabCount : " + carinfo.Lab;
-        testtext += "\nBestTime : " + carinfo.BestTime;
+        testtext += "\nBestTime : " + carinfo.BestTime.ToString("0.00");
         testtext += "\nLastGetItemName : " + _lastGetItemName;
 
         testtmp.text = testtext;

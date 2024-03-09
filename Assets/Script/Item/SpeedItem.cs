@@ -11,7 +11,7 @@ public class SpeedItem : BaseItem
 
         Rigidbody CarRigid = GameManager.instance.Player.GetComponent<Rigidbody>();
 
-        CarRigid.AddForce(transform.forward * AddSpeed, ForceMode.Impulse);
+        CarRigid.AddForce(GameManager.instance.Player.transform.forward * AddSpeed, ForceMode.Impulse);
 
 
         Destroy(gameObject);

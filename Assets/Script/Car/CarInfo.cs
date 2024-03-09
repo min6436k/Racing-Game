@@ -30,6 +30,11 @@ public class CarInfo : MonoBehaviour
             BestTime = Mathf.Min(BestTime, GameManager.instance.TimeGauge.PlayTime - _lastTime); //최고 기록 갱신
             _lastTime = GameManager.instance.TimeGauge.PlayTime; //이전 랩 돌파 시간 기록
         }
+
+        Lab++;
+
+        if (GetComponent<CarController>().IsPlayer == true) GameManager.instance.SpawnItem();
+        
     }
 
     private void FixedUpdate()
@@ -43,11 +48,14 @@ public class CarInfo : MonoBehaviour
         {
             GetComponent<CarController>().bPassLastPoint = false;
             FinishLine();
-            Lab++;
 
             if (Lab == 3)
             {
-                if (GetComponent<CarController>().IsPlayer) GameManager.instance.GameClear();
+                if (GetComponent<CarController>().IsPlayer)
+                {
+                    GameManager.instance.TimeGauge.RecordEnd();
+                    GameManager.instance.GameClear();
+                }
                 else GameManager.instance.GameOver();
             }
 

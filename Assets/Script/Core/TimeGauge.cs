@@ -18,6 +18,6 @@ public class TimeGauge : MonoBehaviour
     public void RecordEnd()
     {
         _endTime = Time.time;
-        ClearTime = _startTime - _endTime;
+        ClearTime =  _endTime - _startTime;
     }
 }

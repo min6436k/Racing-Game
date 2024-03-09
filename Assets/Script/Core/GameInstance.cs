@@ -10,10 +10,16 @@ public class GameInstance : MonoBehaviour
     static public GameInstance instance;
 
     public List<BaseStage> Stages;
+    public int CurrentStage;
+    public float[] CurrentClearTimes = new float[3];
+
     public List<ShopItem> ShopItems;
     public int Coin = 0;
 
     public UnityEvent UpdateShopEvent;
+
+    public bool bFreeShoping = false;
+
 
 
     void Start()
@@ -32,16 +38,30 @@ public class GameInstance : MonoBehaviour
 
     public void BuyShopItem(EnumTypes.Shop ShopItem)
     {
-        ShopItem tempClass = ShopItems.Find(x => x.type == ShopItem);
+        ShopItem TargetItem = ShopItems.Find(x => x.type == ShopItem);
 
-        if (tempClass.ShopItemRank < 3)
+        if (TargetItem.ShopItemRank < 3)
         {
-            tempClass.ShopItemRank++;
+
+            if (bFreeShoping)
+            {
+                bFreeShoping = !bFreeShoping;
+                TargetItem.ShopItemRank++;
+            }
+            else if (TargetItem.Price <= Coin)
+            {
+                Coin -= TargetItem.Price;
+                TargetItem.ShopItemRank++;
+            }
+
             UpdateShopEvent.Invoke();
         }
     }
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.F2)) //상점 무료
+        {
+            bFreeShoping = true;
+        }
     }
 }

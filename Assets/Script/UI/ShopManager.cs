@@ -8,13 +8,15 @@ using UnityEngine.UI;
 [Serializable]
 public class ShopItem
 {
+    [Header("GameInstance")]
     public int ShopItemRank;
 
-    [Header("아래는 GameInstance에서 건드리는거 아님")]
+    public int Price;
+
+    [Header("ShopManager")]
     public EnumTypes.Shop type;
 
     public Transform Ranks;
-
 }
 public class ShopManager : MonoBehaviour
 {
