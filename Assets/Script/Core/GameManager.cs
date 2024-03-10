@@ -158,7 +158,7 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
         }
 
-        if (Input.GetKeyDown(KeyCode.F4) && GameInstance.instance.CurrentStage > 3) //스테이지 이동
+        if (Input.GetKeyDown(KeyCode.F4) && GameInstance.instance.CurrentStage < 3) //스테이지 이동
         {
             TimeGauge.RecordEnd();
             GameClear();
