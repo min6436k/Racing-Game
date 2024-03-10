@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditorInternal;
 using System;
+using Unity.VisualScripting;
 
 [Serializable]
 public class AxleInfo
@@ -108,7 +109,7 @@ public class CarController : MonoBehaviour
             steering = WaypointDistance.x * maxSteeringAngle;
         }
 
-        if (Vector3.Distance(TargetPoint, transform.position) <= (IsPlayer ? 35 : 15))
+        if (Vector3.Distance(TargetPoint, transform.position) <= (IsPlayer ? 30 : 15))
         {
             if (WayPoints.childCount > WayIndex + 1)
             {
@@ -156,11 +157,18 @@ public class CarController : MonoBehaviour
                 rigid.AddForce(transform.forward * 20000, ForceMode.Impulse);
             } //µð¹ö±ë
 
-            if (Input.GetKeyDown(KeyCode.R))
+            if (Input.GetKey(KeyCode.R))
             {
-                transform.position = WayPoints.GetChild(WayIndex == 0 ? WayPoints.childCount-2 : WayIndex - 1).position;
-                transform.position += new Vector3(0, 1.5f, 0);
                 rigid.velocity = Vector3.zero;
+                transform.position = WayPoints.GetChild(WayIndex == 0 ? WayPoints.childCount-2 : WayIndex - 1).position;
+
+                transform.position += new Vector3(0, 1.5f, 0);
+
+                foreach (AxleInfo axleInfo in axleInfos)
+                {
+                    axleInfo.leftWheel.brakeTorque = 10000000;
+                    axleInfo.rightWheel.brakeTorque = 10000000;
+                }
 
                 transform.LookAt(TargetPoint);
             }

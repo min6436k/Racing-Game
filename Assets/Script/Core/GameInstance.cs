@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Xml.Serialization;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Events;
@@ -12,6 +14,8 @@ public class GameInstance : MonoBehaviour
     public List<BaseStage> Stages;
     public int CurrentStage;
     public float[] CurrentClearTimes = new float[3];
+
+    public List<float> TotalRanking = new List<float>(); 
 
     public List<ShopItem> ShopItems;
     public int Coin = 0;
@@ -32,7 +36,7 @@ public class GameInstance : MonoBehaviour
         }
         else
         {
-            Destroy(this);
+            Destroy(this.gameObject);
         }
     }
 
@@ -40,7 +44,7 @@ public class GameInstance : MonoBehaviour
     {
         ShopItem TargetItem = ShopItems.Find(x => x.type == ShopItem);
 
-        if (TargetItem.ShopItemRank < 3)
+        if (TargetItem.ShopItemRank < TargetItem.MaxUpgradeRank)
         {
 
             if (bFreeShoping)
@@ -63,5 +67,32 @@ public class GameInstance : MonoBehaviour
         {
             bFreeShoping = true;
         }
+    }
+
+    public void AddRanking()
+    {
+        TotalRanking.Add(CurrentClearTimes.Sum());
+
+        TotalRanking.Sort();
+
+        if (TotalRanking.Count > 5)
+        {
+            TotalRanking.RemoveAt(TotalRanking.Count - 1);
+        }
+
+        InitGame();
+    }
+
+    public void InitGame()
+    {
+        CurrentClearTimes = new float[3];
+        
+        foreach(var i in ShopItems)
+            i.ShopItemRank = 0;
+
+        foreach(var i in Stages)
+            i.Cleared = false;
+
+        Coin = 0;
     }
 }

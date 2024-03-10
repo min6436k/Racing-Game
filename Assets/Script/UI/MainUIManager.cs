@@ -16,26 +16,14 @@ public class MainUIManager : MonoBehaviour
 
     public GameObject[] ClearPanels;
 
-    public TextMeshProUGUI Ranking;
+    public TextMeshProUGUI RankingTMP;
 
     private void Start()
     {
         OnUIList.Push(TitleUI);
 
-        for(int i = 0; i < ClearPanels.Length; i++)
-        {
-            if (GameInstance.instance.Stages[i].Cleared)
-            {
-                ClearPanels[i].SetActive(true);
-            }
-            else
-            {
-                for(int j = i+1; j < ClearPanels.Length; j++)
-                {
-                    ClearPanels[j].SetActive(true);
-                }
-            }
-        }
+        ClearState();
+        UpdateRanking();
     }
     public void OpenUI(GameObject TargetUI)
     {
@@ -53,10 +41,33 @@ public class MainUIManager : MonoBehaviour
         }
     }
 
+    void ClearState()
+    {
+        for (int i = 0; i < ClearPanels.Length; i++)
+        {
+            if (GameInstance.instance.Stages[i].Cleared)
+            {
+                ClearPanels[i].SetActive(true);
+            }
+            else
+            {
+                for (int j = i + 1; j < ClearPanels.Length; j++)
+                {
+                    ClearPanels[j].SetActive(true);
+                }
+            }
+        }
+    }
+
     void UpdateRanking()
     {
-        string text = "1st : ";
-        //Á¦ÀÛÁß
+        string[] temp = { "1st : ", "2nd : ", "3rd : ", "4th : ", "5th : " };
+
+        for(int i = 0;i < GameInstance.instance.TotalRanking.Count; i++)
+        {
+            temp[i] += GameInstance.instance.TotalRanking[i];
+        }
+        RankingTMP.text = string.Join("\n",temp);
     }
 
     public void GoToStage(int SceneNum)

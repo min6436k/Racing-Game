@@ -11,6 +11,8 @@ public class ShopItem
     [Header("GameInstance")]
     public int ShopItemRank;
 
+    public int MaxUpgradeRank;
+
     public int Price;
 
     [Header("ShopManager")]

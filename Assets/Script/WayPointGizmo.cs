@@ -10,7 +10,7 @@ public class WayPointGizmo : MonoBehaviour
         foreach (Transform t in WayPoints)
         {
             Gizmos.color = Color.green;
-            Gizmos.DrawWireSphere(t.position, 35); //플레이어 범위
+            Gizmos.DrawWireSphere(t.position, 30); //플레이어 범위
 
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(t.position, 15); //적 범위

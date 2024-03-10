@@ -28,6 +28,7 @@ public class NonPlayCar : MonoBehaviour
 
         if (WayIndex >= 0 && WayIndex < WayPoints.childCount)
             TargetPoint = WayPoints.GetChild(WayIndex).position;
+        else Destroy(gameObject);
 
 
 

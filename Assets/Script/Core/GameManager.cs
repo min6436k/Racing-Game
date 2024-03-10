@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.ConstrainedExecution;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -34,7 +35,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Destroy(this);
+            Destroy(this.gameObject);
         }
 
         TimeGauge = Managers.GetComponent<TimeGauge>();
@@ -56,6 +57,7 @@ public class GameManager : MonoBehaviour
 
     public void GameClear()
     {
+
         Player.GetComponent<CarController>().IsPlayer = false;
 
         int stageindex = GameInstance.instance.CurrentStage;
@@ -69,14 +71,25 @@ public class GameManager : MonoBehaviour
 
         if(stageindex == 3)
         {
-            //엔딩, 랭킹 처리
+            GameInstance.instance.AddRanking();
         }
         else
         {
             GameInstance.instance.Coin += 5000000*stageindex;
         }
 
+        GetComponentInChildren<InGameUIManager>().EndUIOpen(true);
+
         Invoke("LoadMainScene", 5f);
+    }
+
+    public void GameOver()
+    {
+        Player.GetComponent<CarController>().IsPlayer = false;
+
+        GetComponentInChildren<InGameUIManager>().EndUIOpen(false);
+
+        Invoke("ReLoadStage", 5f);
     }
 
     void LoadMainScene()
@@ -84,11 +97,11 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("Main");
     }
 
-
-    public void GameOver()
+    void ReLoadStage()
     {
         SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
     }
+
     public void CountDown(TextMeshProUGUI t)
     {
         int Count = int.Parse(t.text);
@@ -147,6 +160,9 @@ public class GameManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F4) && GameInstance.instance.CurrentStage > 3) //스테이지 이동
         {
+            TimeGauge.RecordEnd();
+            GameClear();
+
             GameInstance.instance.CurrentStage++;
             SceneManager.LoadSceneAsync("Stage"+ GameInstance.instance.CurrentStage);
         }
