@@ -32,6 +32,8 @@ public class CarController : MonoBehaviour
 
     private Rigidbody rigid;
 
+    private bool boosterCooldown = false;
+
 
     private void Start()
     {
@@ -43,7 +45,7 @@ public class CarController : MonoBehaviour
         if (gameObject.CompareTag("Player")) IsPlayer = true;
         else IsPlayer = false;
 
-        switch(GameInstance.instance.ShopItems.Find(x => x.type == EnumTypes.Shop.Engine).ShopItemRank)
+        switch (GameInstance.instance.ShopItems.Find(x => x.type == EnumTypes.Shop.Engine).ShopItemRank)
         {
             case 1:
                 maxMotorTorque *= 1.4f;
@@ -152,27 +154,37 @@ public class CarController : MonoBehaviour
     {
         if (IsPlayer)
         {
-            if (Input.GetKeyDown(KeyCode.K))
+            if (Input.GetKeyDown(KeyCode.B) && boosterCooldown == false)
             {
-                rigid.AddForce(transform.forward * 20000, ForceMode.Impulse);
-            } //µð¹ö±ë
+                int skillRank = GameInstance.instance.ShopItems.Find(x => x.type == EnumTypes.Shop.Booster).ShopItemRank;
+                float Cooltime = skillRank == 0 ? 0 : 10 / skillRank;
+
+                if (Cooltime != 0)
+                {
+                    rigid.AddForce(transform.forward * 15000, ForceMode.Impulse);
+                    boosterCooldown = true;
+                    StartCoroutine(BoosterCoolDown(Cooltime));
+                }
+            }
 
             if (Input.GetKey(KeyCode.R))
             {
                 rigid.velocity = Vector3.zero;
-                transform.position = WayPoints.GetChild(WayIndex == 0 ? WayPoints.childCount-2 : WayIndex - 1).position;
+                rigid.angularVelocity = Vector3.zero;
+                transform.position = WayPoints.GetChild(WayIndex == 0 ? WayPoints.childCount - 2 : WayIndex - 1).position;
 
                 transform.position += new Vector3(0, 1.5f, 0);
-
-                foreach (AxleInfo axleInfo in axleInfos)
-                {
-                    axleInfo.leftWheel.brakeTorque = 10000000;
-                    axleInfo.rightWheel.brakeTorque = 10000000;
-                }
 
                 transform.LookAt(TargetPoint);
             }
 
         }
+    }
+
+    IEnumerator BoosterCoolDown(float time)
+    {
+        yield return new WaitForSeconds(time);
+
+        boosterCooldown = false;
     }
 }

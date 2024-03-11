@@ -37,7 +37,7 @@ public class ItemManager : MonoBehaviour
 
         foreach (Transform t in WayPoints.transform)
         {
-            Vector3 SpawnPos = new Vector3(Random.Range(-8, 8), 1.5f, Random.Range(-8, 8));
+            Vector3 SpawnPos = new Vector3(Random.Range(-8, 8), 100f, Random.Range(-8, 8));
 
             if(Random.Range(0, 5) == 0) //1/5 È®·ü·Î ½ºÆù
             {
@@ -52,6 +52,17 @@ public class ItemManager : MonoBehaviour
                 else
                 {
                     instance = Instantiate(Items[Random.Range(0, Items.Count)], t.position + SpawnPos, Quaternion.identity);
+                }
+
+                RaycastHit hit;
+                if(Physics.Raycast(instance.transform.position,Vector3.down, out hit))
+                {
+                    instance.transform.position = hit.point + Vector3.up;
+                }
+                else
+                {
+                    Destroy(instance);
+                    continue;
                 }
 
                 SpawnItems.Add(instance);

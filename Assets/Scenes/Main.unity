@@ -905,12 +905,12 @@ MonoBehaviour:
     Ranks: {fileID: 0}
   - ShopItemRank: 0
     MaxUpgradeRank: 2
-    Price: 8000000
+    Price: 5000000
     type: 1
     Ranks: {fileID: 0}
   - ShopItemRank: 0
     MaxUpgradeRank: 2
-    Price: 100
+    Price: 5000000
     type: 2
     Ranks: {fileID: 0}
   Coin: 0

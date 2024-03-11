@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8031853190034703458}
   - component: {fileID: 5668013857451346013}
   - component: {fileID: 8228379285680517421}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tier 3
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 2191794809356143143}
   - component: {fileID: 6927549426439275325}
   - component: {fileID: 3383270755492125656}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: pPipe4 1
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -179,7 +179,7 @@ GameObject:
   - component: {fileID: 8834243595963953335}
   m_Layer: 0
   m_Name: Body
-  m_TagString: Player
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -239,9 +239,9 @@ GameObject:
   m_Component:
   - component: {fileID: 272530216508254320}
   - component: {fileID: 8758808227608146955}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wheel_B_R
-  m_TagString: Player
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -310,7 +310,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9191515200151398097}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Ring
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -346,7 +346,7 @@ GameObject:
   - component: {fileID: 3685936329327038521}
   - component: {fileID: 6519523733579252402}
   - component: {fileID: 4541999138145291494}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tier 1
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -461,7 +461,7 @@ GameObject:
   - component: {fileID: 6600471053951060577}
   - component: {fileID: 8156383541587309697}
   - component: {fileID: 8611542175655282728}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: pCube871 3
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -718,7 +718,7 @@ GameObject:
   - component: {fileID: 5814820126761191599}
   - component: {fileID: 5195823510979321584}
   - component: {fileID: 2079154211740148089}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tier
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -801,7 +801,7 @@ GameObject:
   - component: {fileID: 7738828057930265230}
   - component: {fileID: 2804380581324351351}
   - component: {fileID: 706956082619140474}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: pCube871
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1069,7 +1069,7 @@ GameObject:
   - component: {fileID: 5693115875219253927}
   - component: {fileID: 8088103698792196635}
   - component: {fileID: 9097538743299714996}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tier 2
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1153,7 +1153,7 @@ GameObject:
   - component: {fileID: 4452249507258995852}
   - component: {fileID: 4026162583760525360}
   - component: {fileID: 2608042575300292633}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: pPipe4
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1234,7 +1234,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6386353099501412577}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Ring 2
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1351,9 +1351,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6314181892391629779}
   - component: {fileID: 5531090705001737822}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wheel_F_L
-  m_TagString: Player
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1422,7 +1422,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5727349251875959865}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Ring 1
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1456,9 +1456,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8992806960230537106}
   - component: {fileID: 2621183455718682393}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wheel_B_L
-  m_TagString: Player
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1529,7 +1529,7 @@ GameObject:
   - component: {fileID: 73726136972171810}
   - component: {fileID: 6312506061373233711}
   - component: {fileID: 8710362629801319389}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: pCube871 1
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1611,7 +1611,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 143750790339039134}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Ring 3
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1646,7 +1646,7 @@ GameObject:
   - component: {fileID: 4294714124913947652}
   - component: {fileID: 7936458557072494213}
   - component: {fileID: 6384658092011367094}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: pCube871 2
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1763,7 +1763,7 @@ GameObject:
   - component: {fileID: 1392361021287816382}
   - component: {fileID: 3562279971727096618}
   - component: {fileID: 3988870490766539498}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: pPipe4 2
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1846,7 +1846,7 @@ GameObject:
   - component: {fileID: 6425725667427072886}
   - component: {fileID: 1448509920134940717}
   - component: {fileID: 3768850354747566745}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: pPipe4 3
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1928,9 +1928,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4057833561167225029}
   - component: {fileID: 2070039757410650404}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wheel_F_R
-  m_TagString: Player
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

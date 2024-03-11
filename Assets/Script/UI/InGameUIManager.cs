@@ -20,7 +20,7 @@ public class InGameUIManager : MonoBehaviour
 
     public void SetLastItemName(string name)
     {
-        _lastGetItemName = name;
+        _lastGetItemName = name.Substring(0,name.Length-7);
     }
 
     void Update()

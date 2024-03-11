@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -24,6 +25,8 @@ public class ShopManager : MonoBehaviour
 {
     public List<ShopItem> ShopItems = new List<ShopItem> ();
 
+    public TextMeshProUGUI CoinText;
+
     private void Start()
     {
         UpdateShopUI();
@@ -32,6 +35,8 @@ public class ShopManager : MonoBehaviour
 
     public void UpdateShopUI()
     {
+        CoinText.text = "Coin : " + GameInstance.instance.Coin;
+
         foreach (var item in ShopItems)
         {
             ViewUpgradeRank(GameInstance.instance.ShopItems.Find(x => x.type == item.type).ShopItemRank, item.Ranks);

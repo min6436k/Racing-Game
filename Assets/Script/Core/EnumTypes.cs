@@ -24,7 +24,7 @@ namespace EnumTypes
     {
         Tier,
         Engine,
-        Other,
+        Booster,
         Last
     }
 }
