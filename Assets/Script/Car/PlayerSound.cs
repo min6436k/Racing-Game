@@ -16,7 +16,8 @@ public class PlayerSound : MonoBehaviour
     {
         if(Input.GetAxis("Vertical") != 0)
         {
-            Engine.pitch = Mathf.Clamp(rb.velocity.magnitude*3.6f/30,1,1.25f);
+            Engine.pitch = Mathf.Lerp(Engine.pitch, Mathf.Clamp(rb.velocity.magnitude * 3.6f / 20, 1, 1.25f), 2 * Time.deltaTime);
+            
         }
         else
         {
