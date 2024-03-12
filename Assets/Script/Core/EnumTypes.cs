@@ -9,6 +9,7 @@ namespace EnumTypes
         Speed,
         //속도 2종류
         Shop,
+        StopItem,
         Last
     }
     public enum Tier
